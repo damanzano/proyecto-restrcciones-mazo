@@ -45,46 +45,48 @@ in
    %%         entre las Features y su clones (cardinalidad)
 
    % PostionSensor
-   {FD.impl PositionSensor1 PositionSensor}
-   {FD.impl PositionSensor2 PositionSensor}
-   {FD.impl PositionSensor3 PositionSensor}
-   {FD.impl PositionSensor4 PositionSensor}
+   {FD.impl PositionSensor1 PositionSensor 1}
+   {FD.impl PositionSensor2 PositionSensor 1}
+   {FD.impl PositionSensor3 PositionSensor 1}
+   {FD.impl PositionSensor4 PositionSensor 1}
 
    % Procesor
-   {FD.impl Procesor1 Procesor}
-   {FD.impl Procesor2 Procesor}
+   {FD.impl Procesor1 Procesor 1}
+   {FD.impl Procesor2 Procesor 1}
 
    % InternalMemory
-   {FD.impl InternalMemory1 InternalMemory}
-   {FD.impl InternalMemory2 InternalMemory}
+   {FD.impl InternalMemory1 InternalMemory 1}
+   {FD.impl InternalMemory2 InternalMemory 1}
 
    %% Paso 4: Definir las restricciones correspondientes a la cardinalidad
    %%         de cada una de las Features
    % PositionSensor
-   {FD.impl PositionSensor {FD.conj (PositionSensor1+PositionSensor2+PositionSensor3+PositionSensor4>=:0) (PositionSensor1+PositionSensor2+PositionSensor3+PositionSensor4=<:4)}}
+   {FD.impl PositionSensor {FD.conj (PositionSensor1+PositionSensor2+PositionSensor3+PositionSensor4>=:0) (PositionSensor1+PositionSensor2+PositionSensor3+PositionSensor4=<:4)} 1}
 
    % Procesor
-   {FD.impl Procesor {FD.conj (Procesor1+Procesor2>=:1) (Procesor1+Procesor2=<:2)}}
+   {FD.impl Procesor {FD.conj (Procesor1+Procesor2>=:1) (Procesor1+Procesor2=<:2)} 1}
 
    % InternalMemory
-   {FD.impl InternalMemory {FD.conj (InternalMemory1+InternalMemory2>=:1) (InternalMemory1+InternalMemory2=<:2)}}
+   {FD.impl InternalMemory {FD.conj (InternalMemory1+InternalMemory2>=:1) (InternalMemory1+InternalMemory2=<:2)} 1}
 
    %% Paso 5: Definir las restricciones correspondientes a las relaciones padre-hijo
-   {FD.equi MovementControlSystem SpeedSensor}
-   {FD.equi MovementControlSystem Procesor}
-   {FD.equi Procesor InternalMemory}
-   {FD.impl MovementControlSystem PositionSensor>=:0}
-   {FD.impl PositionSensor MovementControlSystem}
+   {FD.equi MovementControlSystem SpeedSensor 1}
+   {FD.equi MovementControlSystem Procesor 1}
+   {FD.equi Procesor InternalMemory 1}
+   {FD.impl MovementControlSystem PositionSensor>=:0 1}
+   {FD.impl PositionSensor MovementControlSystem 1}
 
    %% Paso 6: Definir las restriciones correspondientes a los atributos
-   {FD.equi InternalMemory Size>:0}
+   {FD.equi InternalMemory Size>:0 1}
 
    %% Paso 7: Definir restricciones correspondientes a relaciones de requerimientos y excluisiones
-   {FD.impl SpeedSensor PositionSensor}
+   {FD.impl SpeedSensor PositionSensor 1}
    
    %% specify distribution strategy
    {FD.distribute ff Root}
 end
 
-{ExploreOne MCS}
-{Browse {SearchOne MCS}}
+%{ExploreOne MCS}
+%{Browse {SearchOne MCS}}
+
+{ExploreAll MCS}
